@@ -1,4 +1,4 @@
-package com.example.project3testswrapper;
+package com.example.project3monocityrecord;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
