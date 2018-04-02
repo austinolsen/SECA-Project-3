@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.BDDMockito.given;
@@ -51,7 +52,7 @@ public class UsersControllerTest {
 
 
     @Test
-    public void findAllUsers_success_returnAllUsersAsJSON() throws Exception {
+    public void findAllUsers_suc_returnAllUsersAsJSON() throws Exception {
 
         this.mockMvc
                 .perform(get("/users"))
@@ -60,7 +61,7 @@ public class UsersControllerTest {
 
 
     @Test
-    public void findAll_success_returnsStatusOK() throws Exception {
+    public void findAll_suc_returnsStatusOK() throws Exception {
 
         this.mockMvc
                 .perform(get("/"))
@@ -81,5 +82,29 @@ public class UsersControllerTest {
         this.mockMvc
                 .perform(get("/users"))
                 .andExpect(jsonPath("$[1].password", is("PassTwo")));
+    }
+
+    @Test
+    public void findUserById_suc_returnStatusOk() throws Exception {
+
+        this.mockMvc
+                .perform(get("/users/1"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void findUserById_suc_returnUserName() throws Exception {
+
+        this.mockMvc
+                .perform(get("/users/1"))
+                .andExpect(jsonPath("$.userName", is("UserOne")));
+    }
+
+    @Test
+    public void findUserById_suc_returnPassword() throws Exception {
+
+        this.mockMvc
+                .perform(get("/users/1"))
+                .andExpect(jsonPath("$.password", is("PassOne")));
     }
 }
