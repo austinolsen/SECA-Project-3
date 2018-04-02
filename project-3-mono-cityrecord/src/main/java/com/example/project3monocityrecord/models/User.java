@@ -14,8 +14,12 @@ public class User {
     @Column(name = "USER_NAME")
     private String userName;
 
-    public User(String userName) {
+    @Column(name = "PASSWORD")
+    private String passWord;
+
+    public User(String userName, String passWord) {
         this.userName = userName;
+        this.passWord = passWord;
     }
 
 }

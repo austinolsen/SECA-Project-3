@@ -1,8 +1,8 @@
 
 INSERT INTO USERS
-	(USER_NAME)
+	(USER_NAME, PASSWORD)
 VALUES
-	('User 1'),
-	('User 2'),
-	('User 3'),
-	('User 4');
+	('User 1', 'PassOne'),
+	('User 2', 'PassTwo'),
+	('User 3', 'PassThree'),
+	('User 4', 'PassFour');
