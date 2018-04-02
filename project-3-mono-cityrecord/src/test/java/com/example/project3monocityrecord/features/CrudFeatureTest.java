@@ -1,8 +1,7 @@
-package features;
+package com.example.project3monocityrecord.features;
 
 import com.example.project3monocityrecord.models.User;
 import com.example.project3monocityrecord.repositories.UserRepository;
-import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +13,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.stream.Stream;
 
 import static io.restassured.RestAssured.when;
-import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.StringContains.containsString;
 
 
 @RunWith(SpringRunner.class)
@@ -52,10 +52,9 @@ public class CrudFeatureTest {
 
         when()
                 .get("http://localhost:8080/users/")
-        .then()
-                .statusCode(Matchers.is(200))
+                .then()
+                .statusCode(is(200))
                 .and().body(containsString("UserOne"))
                 .and().body(containsString("UserTwo"));
-
     }
 }
