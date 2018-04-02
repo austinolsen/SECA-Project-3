@@ -2,7 +2,6 @@ package com.example.project3monocityrecord.features;
 
 import com.example.project3monocityrecord.models.User;
 import com.example.project3monocityrecord.repositories.UserRepository;
-import io.restassured.http.ContentType;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -79,7 +78,6 @@ public class CrudFeatureTest {
                 .and().body(containsString("UserThree"));
 
         //Get by ID test
-
         when()
                 .get("http://localhost:8080/users/" + secondUser.getId())
                 .then()

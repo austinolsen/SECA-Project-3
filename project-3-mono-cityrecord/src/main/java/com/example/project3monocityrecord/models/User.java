@@ -15,11 +15,11 @@ public class User {
     private String userName;
 
     @Column(name = "PASSWORD")
-    private String passWord;
+    private String password;
 
-    public User(String userName, String passWord) {
+    public User(String userName, String password) {
         this.userName = userName;
-        this.passWord = passWord;
+        this.password = password;
     }
 
 }
