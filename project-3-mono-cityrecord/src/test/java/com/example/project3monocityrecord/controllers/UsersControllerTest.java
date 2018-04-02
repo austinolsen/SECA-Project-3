@@ -11,13 +11,17 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -41,10 +45,12 @@ public class UsersControllerTest {
                 "PassTwo"
         );
 
-        Iterable<User> mockUsers =
+        List<User> mockUsers =
                 Stream.of(firstUser, secondUser).collect(Collectors.toList());
 
         given(mockUserRepository.findAll()).willReturn(mockUsers);
+
+//        given(mockUserRepository.findOne()).willReturn(firstUser);
     }
 
     @Autowired
@@ -107,4 +113,42 @@ public class UsersControllerTest {
                 .perform(get("/users/1"))
                 .andExpect(jsonPath("$.password", is("PassOne")));
     }
+
+    @Test
+    public void deleteUserById_suc_returnsStatusOk() throws Exception {
+
+        this.mockMvc
+                .perform(delete("/users/1"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void deleteUserById_suc_deletesViaRepository() throws Exception{
+
+        this.mockMvc.perform(delete("/users/1"));
+
+//        verify(mockUserRepository, times(1)).delete(User 1L);
+    }
+
+
+
+    //Unhappy
+
+    @Test
+    public void findUserById_fail_userNotFound404() throws Exception {
+
+        this.mockMvc
+                .perform(get("/users/4"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void findUserById_fail_userNotFoundError() throws Exception {
+
+        this.mockMvc
+                .perform(get("/users/4"))
+                .andExpect(status().reason(containsString("User with ID of 4 was not found.")));
+    }
+
+
 }

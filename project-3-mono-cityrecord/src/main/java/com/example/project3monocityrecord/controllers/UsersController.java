@@ -3,6 +3,7 @@ package com.example.project3monocityrecord.controllers;
 import com.example.project3monocityrecord.models.User;
 import com.example.project3monocityrecord.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -32,4 +33,23 @@ public class UsersController {
     public User createNewUser (@RequestBody User newUser) {
         return  userRepository.save(newUser);
     }
+
+    @DeleteMapping("/users/{userId}")
+    public HttpStatus deleteUserById (@PathVariable Long userId) {
+        userRepository.deleteById(userId);
+        return HttpStatus.OK;
+    }
+
+    @PatchMapping("/users/{userId}")
+    public User updateUserById(@PathVariable Long userId, @RequestBody User userRequest) {
+
+        User userFromDb = userRepository.findById(userId).get();
+
+        userFromDb.setUserName(userRequest.getUserName());
+        userFromDb.setPassword(userRequest.getPassword());
+
+        return userRepository.save(userFromDb);
+    }
+
+
 }

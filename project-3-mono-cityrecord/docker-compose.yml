@@ -20,3 +20,14 @@ services:
          - POSTGRES_PASSWORD=password
          - POSTGRES_USER=postgres
          - POSTGRES_DB=pgdev
+  city-record-ui:
+    image: node
+    ports:
+      - '3000:3000'
+    working_dir: /city-record-ui
+    volumes:
+      - ./city-record-ui:/city-record-ui
+    command: 'npm start'
+    environment:
+      - GRADLE_USER_HOME=cache
+      - SPRING_PROFILES_ACTIVE=dev
