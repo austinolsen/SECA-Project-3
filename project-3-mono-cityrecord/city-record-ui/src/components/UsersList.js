@@ -14,15 +14,17 @@ const UsersList = (props) => {
         props.users.map((user, index) => {
           return (
             <User
+              handleUpdate={props.handleUpdate}
+              updateUser={props.updateUser}
               deleteUser={props.deleteUser}
               user={user}
               key={index}
               index={index} />
-            )
-          })
-        }
-      </div>
-    )
-  }
+          )
+        })
+      }
+    </div>
+  )
+}
 
-  export default UsersList
+export default UsersList

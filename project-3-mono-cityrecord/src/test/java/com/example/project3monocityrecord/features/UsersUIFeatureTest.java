@@ -58,17 +58,13 @@ public class UsersUIFeatureTest {
         $$("[data-user-display]").shouldHaveSize(2);
 
         $("#user-" + firstUserId + "-user-name").shouldHave(text("FeatName"));
-        $("#user-" + firstUserId + "-password").shouldHave(text("FeatPass"));
 
         $("#user-" + secondUserId + "-user-name").shouldHave(text("SecName"));
-        $("#user-" + secondUserId + "-password").shouldHave(text("SecPass"));
-
         $("#new-user-link").click();
 
         $("#new-user-form").should(appear);
 
         $("#new-user-user-name").sendKeys("third_user");
-        $("#new-user-password").sendKeys("MyPass");
         $("#new-user-submit").click();
 
         $("#users-wrapper").should(appear);
@@ -77,7 +73,6 @@ public class UsersUIFeatureTest {
 
         Long thirdUserId = secondUserId + 1;
         $("#user-" + thirdUserId + "-user-name").shouldHave(text("third_user"));
-        $("#user-" + thirdUserId + "-password").shouldHave(text("MyPass"));
 
         $("#user-" + firstUserId).should(exist);
         $$("[data-user-display]").shouldHaveSize(3);

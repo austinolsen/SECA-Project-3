@@ -21,6 +21,28 @@ class App extends Component {
     })
   }
 
+  updateUser = async (index) => {
+    try {
+      const userToUpdate = this.state.users[index]
+      await axios.patch(`/users/${userToUpdate.id}`, userToUpdate)
+    } catch(error) {
+      console.log(`User did not update. UserIndex:${index}`)
+      console.log(error)
+    }
+
+  }
+
+  handleUpdate = (event, index) => {
+    const valueToChange = event.target.name
+    const newValue = event.target.value
+
+    const updatedUsersList = [...this.state.users]
+    const userToUpdate = updatedUsersList[index]
+    userToUpdate[valueToChange] = newValue
+
+    this.setState({users: updatedUsersList})
+  }
+
   deleteUser = async (userId, index) => {
     try {
       await axios.delete(`/users/${userId}`)
@@ -54,7 +76,9 @@ class App extends Component {
     const UsersListComponent = () => (
       <UsersList
         users={this.state.users}
-        deleteUser={this.deleteUser}/>
+        deleteUser={this.deleteUser}
+        updateUser={this.updateUser}
+        handleUpdate={this.handleUpdate}/>
       )
       const NewUserFormComponent = () => (
         <NewUserForm createUser={this.createUser}/>
