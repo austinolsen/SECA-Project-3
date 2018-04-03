@@ -5,9 +5,9 @@ import {Link} from "react-router-dom";
 const UsersList = (props) => {
   return (
     <div id="users-wrapper">
-      <h1>User Admin Page</h1>
+      <h2>User Admin Page</h2>
       <button>
-        <Link to="/new" id="new-user-link">Create New User</Link>
+        <h4><Link to="/new" id="new-user-link">Create New User</Link></h4>
       </button>
       <hr/>
       {

@@ -17,8 +17,7 @@ class User extends Component {
     return (
       <div id={`user-${this.props.user.id}`} data-user-display>
         <div id={`user-${this.props.user.id}-id`}>
-          User Id:
-          <i>{this.props.user.id}</i>
+          User Id:  {this.props.user.id}
         </div>
 
         <div id={`user-${this.props.user.id}-user-name`}>
