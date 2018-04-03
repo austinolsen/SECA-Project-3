@@ -64,23 +64,21 @@ public class UsersUIFeatureTest {
 
         $("#new-user-form").should(appear);
 
-        $("#new-user-user-name").sendKeys("third_user");
         $("#new-user-submit").click();
 
         $("#users-wrapper").should(appear);
 
-        $$("[data-user-display]").shouldHaveSize(3);
+        $$("[data-user-display]").shouldHaveSize(2);
 
         Long thirdUserId = secondUserId + 1;
-        $("#user-" + thirdUserId + "-user-name").shouldHave(text("third_user"));
 
         $("#user-" + firstUserId).should(exist);
-        $$("[data-user-display]").shouldHaveSize(3);
+        $$("[data-user-display]").shouldHaveSize(2);
 
         $("#delete-user-" + firstUserId).click();
         $("#user-" + firstUserId).shouldNot(exist);
 
-        $$("[data-user-display]").shouldHave(size(2));
+        $$("[data-user-display]").shouldHave(size(1));
 
     }
 }
