@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.stream.Stream;
 
+import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
 
@@ -51,6 +52,8 @@ public class UsersUIFeatureTest {
         Long secondUserId = secondUser.getId();
 
         System.setProperty("selenide.browser", "Chrome");
+        System.setProperty("selenide.headless", "true");
+
         open("http://localhost:3000");
         $$("[data-user-display]").shouldHaveSize(2);
 
@@ -75,6 +78,14 @@ public class UsersUIFeatureTest {
         Long thirdUserId = secondUserId + 1;
         $("#user-" + thirdUserId + "-user-name").shouldHave(text("third_user"));
         $("#user-" + thirdUserId + "-password").shouldHave(text("MyPass"));
+
+        $("#user-" + firstUserId).should(exist);
+        $$("[data-user-display]").shouldHaveSize(3);
+
+        $("#delete-user-" + firstUserId).click();
+        $("#user-" + firstUserId).shouldNot(exist);
+
+        $$("[data-user-display]").shouldHave(size(2));
 
     }
 }
