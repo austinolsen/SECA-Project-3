@@ -1,38 +1,60 @@
-import React from 'react'
+import React, { Component } from 'react';
 
-const User = (props) => {
-  return (
-    <div id={`user-${props.user.id}`} data-user-display>
+class User extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {isVisible: false}
+    this.handleClick = this.handleClick.bind(this)
+  }
 
-      <div id={`user-${props.user.id}-user-name`}>
-        Username:
-        <strong>{props.user.userName}</strong>
-      </div>
+  handleClick() {
+    this.setState(prevState => ({
+      isVisible: !prevState.isVisible
+    }))
+  }
 
-      <div id={`user-${props.user.id}-password`}>
-        Password:
-        <input
-          // type="hidden"
-          name="password"
-          value={props.user.password}
-          onChange={(event) => props.handleUpdate(event, props.index)}
-          onBlur={() => props.updateUser(props.index)}/>
-        <button>Update</button>
-      </div>
+  render() {
+    return (
+      <div id={`user-${this.props.user.id}`} data-user-display>
+        <div id={`user-${this.props.user.id}-id`}>
+          User Id:
+          <i>{this.props.user.id}</i>
+        </div>
 
-      <div id={`user-${props.user.id}-id`}>
-        User Id:
-        <i>{props.user.id}</i>
-      </div>
+        <div id={`user-${this.props.user.id}-user-name`}>
+          Username:
+          <strong>{this.props.user.userName}</strong>
+        </div>
 
-      <button
-        id={`delete-user-${props.user.id}`}
-        onClick={() => {props.deleteUser(props.user.id, props.index)}}>
-        Delete
-      </button>
+        <div id={`user-${this.props.user.id}-password`}>
+          Password:
+          {
+            this.state.isVisible ?
+            <input
+              name="password"
+              value={this.props.user.password}
+              onChange={(event) => this.props.handleUpdate(event, this.props.index)}/>
+              :
+              ''
+            }
 
-    </div>
-  )
-}
+            <button
+              onClick={this.handleClick}>
+              Update
+            </button>
+
+          </div>
+
+          <button
+            id={`delete-user-${this.props.user.id}`}
+            onClick={() => {this.props.deleteUser(this.props.user.id, this.props.index)}}>
+            Delete
+          </button>
+
+        </div>
+      )
+    }
+  }
+
 
 export default User
