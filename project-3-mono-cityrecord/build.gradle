@@ -51,4 +51,10 @@ dependencies {
     compile 'org.flywaydb:flyway-core'
     compileOnly 'org.projectlombok:lombok'
     testCompile 'io.rest-assured:rest-assured:3.0.6'
+    testCompile 'org.seleniumhq.selenium:selenium-java:3.9.1'
+    testCompile 'org.seleniumhq.selenium:selenium-api:3.9.1'
+    testCompile 'org.seleniumhq.selenium:selenium-remote-driver:3.9.1'
+    testCompile 'org.seleniumhq.selenium:selenium-chrome-driver:3.9.1'
+    testCompile 'org.seleniumhq.selenium:selenium-support:3.9.1'
+    testCompile 'com.codeborne:selenide:4.10.01'
 }

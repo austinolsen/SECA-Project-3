@@ -1,21 +1,81 @@
 import React, { Component } from 'react';
+import axios from 'axios'
+
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+
+import UsersList from './components/UsersList'
+import NewUserForm from './components/NewUserForm'
 import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">New York City Records</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+  state = {
+    users: []
   }
-}
 
-export default App;
+  async componentWillMount() {
+    const usersResponse = await axios.get('/users')
+    this.setState({
+      users: usersResponse.data,
+      usersResponse
+    })
+  }
+
+  deleteUser = async (userId, index) => {
+    try {
+      await axios.delete(`/users/${userId}`)
+
+      const updatedUsersList = [...this.state.users]
+      updatedUsersList.splice(index, 1)
+
+      this.setState({users: updatedUsersList})
+
+    } catch (error) {
+      console.log(`Error deleting User with ID: ${userId}`)
+    }
+  }
+
+  createUser = async (newUser) => {
+    try {
+      const newUserResponse = await axios.post('/users', newUser)
+      const newUserFromDatabase = newUserResponse.data
+
+      const updatedUsersList = [...this.state.users]
+      updatedUsersList.push(newUserFromDatabase)
+
+      this.setState({users: updatedUsersList})
+
+    } catch (error) {
+      console.log("Error creating new User")
+    }
+  }
+
+  render() {
+    const UsersListComponent = () => (
+      <UsersList
+        users={this.state.users}
+        deleteUser={this.deleteUser}/>
+      )
+      const NewUserFormComponent = () => (
+        <NewUserForm createUser={this.createUser}/>
+      )
+      return (
+        <div className="App">
+          <header className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+            <h1 className="App-title">NY City Records Users</h1>
+          </header>
+          <p className="App-intro">
+            <Router>
+              <Switch>
+                <Route exact path="/" render={UsersListComponent}/>
+                <Route exact path="/new" render={NewUserFormComponent}/>
+              </Switch>
+            </Router>
+          </p>
+        </div>
+      )
+    }
+  }
+
+  export default App
