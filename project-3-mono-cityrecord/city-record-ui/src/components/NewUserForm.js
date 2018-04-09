@@ -26,7 +26,7 @@ class NewUserForm extends Component {
   render() {
 
     if(this.state.redirectToUsersPage) {
-      return <Redirect to="/" />
+      return <Redirect to="/profile" />
     }
 
     return (
