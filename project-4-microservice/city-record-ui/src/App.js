@@ -15,6 +15,7 @@ class App extends Component {
 
   async componentWillMount() {
     const usersResponse = await axios.get('/users')
+//    const usersResponse = await axios.get(`${process.env.REACT_APP_HOST}/users`)
     this.setState({
       users: usersResponse.data,
       usersResponse
@@ -25,6 +26,7 @@ class App extends Component {
     try {
       const userToUpdate = this.state.users[index]
       await axios.patch(`/users/${userToUpdate.id}`, userToUpdate)
+//      await axios.patch(`${process.env.REACT_APP_HOST}/users/${userToUpdate.id}`, userToUpdate)
     } catch(error) {
       console.log(`User did not update. UserIndex:${index}`)
       console.log(error)
@@ -46,6 +48,7 @@ class App extends Component {
   deleteUser = async (userId, index) => {
     try {
       await axios.delete(`/users/${userId}`)
+//      await axios.delete(`${process.env.REACT_APP_HOST}/users/${userId}`)
 
       const updatedUsersList = [...this.state.users]
       updatedUsersList.splice(index, 1)
@@ -60,6 +63,7 @@ class App extends Component {
   createUser = async (newUser) => {
     try {
       const newUserResponse = await axios.post('/users', newUser)
+//      const newUserResponse = await axios.post(`${process.env.REACT_APP_HOST}/users`, newUser)
       console.log(newUserResponse)
       const newUserFromDatabase = newUserResponse.data
 
