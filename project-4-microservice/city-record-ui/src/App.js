@@ -14,7 +14,7 @@ class App extends Component {
   }
 
   async componentWillMount() {
-    const usersResponse = await axios.get(`${process.env.REACT_APP_HOST}/users`)
+    const usersResponse = await axios.get('/users')
     this.setState({
       users: usersResponse.data,
       usersResponse
@@ -24,7 +24,7 @@ class App extends Component {
   updateUser = async (index) => {
     try {
       const userToUpdate = this.state.users[index]
-      await axios.patch(`${process.env.REACT_APP_HOST}/users/${userToUpdate.id}`, userToUpdate)
+      await axios.patch(`/users/${userToUpdate.id}`, userToUpdate)
     } catch(error) {
       console.log(`User did not update. UserIndex:${index}`)
       console.log(error)
@@ -45,7 +45,7 @@ class App extends Component {
 
   deleteUser = async (userId, index) => {
     try {
-      await axios.delete(`${process.env.REACT_APP_HOST}/users/${userId}`)
+      await axios.delete(`/users/${userId}`)
 
       const updatedUsersList = [...this.state.users]
       updatedUsersList.splice(index, 1)
@@ -59,7 +59,7 @@ class App extends Component {
 
   createUser = async (newUser) => {
     try {
-      const newUserResponse = await axios.post(`${process.env.REACT_APP_HOST}/users`, newUser)
+      const newUserResponse = await axios.post('/users', newUser)
       console.log(newUserResponse)
       const newUserFromDatabase = newUserResponse.data
 
@@ -88,7 +88,7 @@ class App extends Component {
         <div className="App">
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">NY City Records Users</h1>
+            <h1 className="App-title">NY  Records Users</h1>
           </header>
           <p className="App-intro">
             <Router>

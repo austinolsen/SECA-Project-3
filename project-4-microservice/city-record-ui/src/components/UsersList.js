@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import User from './User'
 import {Link} from "react-router-dom";
 
