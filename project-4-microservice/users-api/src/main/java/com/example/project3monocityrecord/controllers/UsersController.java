@@ -26,6 +26,15 @@ public class UsersController {
         return userRepository.findAll();
     }
 
+    @GetMapping("/search")
+    public User findUserByUserName(@RequestParam("userName") String userName) throws NotFoundException {
+        User foundUser = userRepository.findByUserName(userName);
+        if(foundUser == null){
+            throw new NotFoundException("Username was not found with: " + userName);
+        }
+        return foundUser;
+    }
+
     @GetMapping("/{userId}")
     public User findUserById(@PathVariable Long userId) throws NotFoundException {
 

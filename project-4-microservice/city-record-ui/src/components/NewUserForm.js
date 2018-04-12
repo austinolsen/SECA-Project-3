@@ -1,17 +1,21 @@
 import React, { Component } from 'react'
 import {Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
+
 
 class NewUserForm extends Component {
 
   state = {
     user: {},
-    redirectToUsersPage: false
+    redirectToProfilePage: false,
+    currentUser: {}
   }
 
   handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     this.props.createUser(this.state.user)
-    this.setState({redirectToUsersPage: true})
+    this.props.setCurrentUser(this.state.user)
+    this.setState({redirectToProfilePage: true})
   }
 
   handleChange = (event) => {
@@ -25,13 +29,23 @@ class NewUserForm extends Component {
 
   render() {
 
-    if(this.state.redirectToUsersPage) {
-      return <Redirect to="/" />
+    if(this.state.redirectToProfilePage) {
+      return <Redirect to="/profile" />
     }
 
     return (
       <div>
         <h2>Create New User</h2>
+        <button>
+          <h4><Link to="/login" id="login-link">Login</Link></h4>
+        </button>
+        <button>
+          <h4><Link to="/admin" id="admin-link">User admin</Link></h4>
+        </button>
+        <button>
+          <h4><Link to="/" id="home-link">Home</Link></h4>
+        </button>
+        <hr/>
         <form onSubmit={this.handleSubmit} id="new-user-form">
           <div>
             <label htmlFor="userName">Username </label>

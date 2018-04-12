@@ -9,6 +9,9 @@ const UsersList = (props) => {
       <button>
         <h4><Link to="/new" id="new-user-link">Create New User</Link></h4>
       </button>
+      <button>
+        <h4><Link to="/" id="home-link">Home</Link></h4>
+      </button>
       <hr/>
       {
         props.users.map((user, index) => {
