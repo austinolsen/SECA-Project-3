@@ -1,18 +1,25 @@
 import React from 'react'
 import {Link} from "react-router-dom";
+import '../App.css';
+
 
 const Home = (props) => {
   return (
-    <div id="home">
-      <h2>Home Page</h2>
-      <button>
-        <h4><Link to="/new" id="new-user-link">Sign Up</Link></h4>
-      </button>
-      <button>
-        <h4><Link to="/login" id="login-link">Login</Link></h4>
-      </button>
-      <hr/>
-    </div>
+    <div className="homepage">
+    <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <Link to="/" id="home-link" className="navbar-brand">The City Record</Link>
+        <div className="collapse navbar-collapse" id="navbarCollapse">
+          <ul className="navbar-nav mr-auto">
+            <li className="nav-item">
+              <Link to="/new" id="new-user-link" className="nav-link">Sign Up</Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/login" id="login-link" className="nav-link">Login</Link>
+            </li>
+          </ul>
+        </div>
+      </nav>
+  </div>
   )
 }
 

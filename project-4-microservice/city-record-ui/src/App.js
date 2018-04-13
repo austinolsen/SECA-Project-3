@@ -8,15 +8,14 @@ import UsersList from './components/UsersList'
 import NewUserForm from './components/NewUserForm'
 import LoginForm from './components/LoginForm'
 import ProfileView from './components/ProfileView'
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
   state = {
     users: [],
-    currentUser: {userName: "Start",
-                  password: "Pass"},
-    isLoggedIn: false
+    currentUser: {},
+    isLoggedIn: false,
+    hearingsResponse: []
   }
 
   async componentWillMount() {
@@ -25,6 +24,18 @@ class App extends Component {
       users: usersResponse.data,
       usersResponse
     })
+  }
+
+  findPublicHearings = async () => {
+    try {
+      let hearingsResponse = await axios.get("https://data.cityofnewyork.us/resource/buex-bi6w.json?section_name=Public%20Hearings%20and%20Meetings&$limit=15&$where=event_date%20between%20%272018-04-01T12:00:00%27%20and%20%272018-08-10T14:00:00%27")
+      hearingsResponse = hearingsResponse.data
+      this.setState({hearingsResponse: hearingsResponse})
+      console.log(hearingsResponse)
+    } catch(error) {
+      console.log("Error getting Public Hearings")
+      console.log(error)
+    }
   }
 
   findUserAndLogin = async (userNameToFind) => {
@@ -97,6 +108,8 @@ class App extends Component {
 
 
   render() {
+
+
     const HomeComponent = () => (
       <Home />
     )
@@ -122,7 +135,9 @@ class App extends Component {
         logUserOut={this.logUserOut}
         deleteUser={this.deleteUser}
         isLoggedIn={this.state.isLoggedIn}
-        currentUser={this.state.currentUser} />
+        currentUser={this.state.currentUser}
+        findPublicHearings={this.findPublicHearings}
+        hearingsResponse={this.state.hearingsResponse}/>
     )
 
     const UsersListComponent = () => (
@@ -136,10 +151,6 @@ class App extends Component {
 
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">The City Records Online</h1>
-        </header>
           <Router>
             <Switch>
               <Route exact path="/" render={HomeComponent}/>

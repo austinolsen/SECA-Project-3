@@ -26,3 +26,38 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.form-signin {
+  max-width: 330px;
+  align-items: center;
+  margin: auto;
+  align-items: center;
+  height: 100%;
+  margin-top: 100px;
+}
+
+.space {
+  margin-top: 20px;
+}
+
+.nav-link {
+  text-align: left;
+}
+
+.homepage {
+  background-image: url('/tom-ritson-388066-unsplash.jpg');
+  background-size: cover;
+   background-position: center center;
+   background-repeat: no-repeat;
+   height: 100vh;
+   width: 100%;
+   margin: 0;
+   padding: 0;
+}
+.container-fluid {
+  padding: 0px;
+}
+
+.results {
+  margin-top: 100px;
+}
