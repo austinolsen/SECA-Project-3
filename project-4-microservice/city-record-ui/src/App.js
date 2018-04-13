@@ -14,7 +14,8 @@ import './App.css';
 class App extends Component {
   state = {
     users: [],
-    currentUser: {},
+    currentUser: {userName: "Start",
+                  password: "Pass"},
     isLoggedIn: false
   }
 
@@ -26,14 +27,22 @@ class App extends Component {
     })
   }
 
-  logUserIn = async (userNameToFind) => {
+  findUserAndLogin = async (userNameToFind) => {
     try {
-      const loginResponse = await axios.get(`${process.env.REACT_APP_HOST}/users/search?userName=${userNameToFind.userName}`)
-      this.setState({currentUser: loginResponse.data})
+      const findUserResponse = await axios.get(`${process.env.REACT_APP_HOST}/users/search?userName=${userNameToFind}`)
+      this.setState({ currentUser: findUserResponse.data, isLoggedIn: true})
     } catch(error) {
       console.log("Could not log in")
       console.log(error)
     }
+  }
+
+  logUserIn = (userInfo) => {
+    this.setState({currentUser: {userInfo}, isLoggedIn: true})
+  }
+
+  logUserOut = () => {
+    this.setState({currentUser: {}, isLoggedIn: false})
   }
 
   updateUser = async (index) => {
@@ -74,16 +83,15 @@ class App extends Component {
   createUser = async (newUser) => {
     try {
       const newUserResponse = await axios.post(`${process.env.REACT_APP_HOST}/users`, newUser)
-      console.log(newUserResponse)
       const newUserFromDatabase = newUserResponse.data
-
+      this.setState({currentUser: newUserFromDatabase, isLoggedIn: true})
       const updatedUsersList = [...this.state.users]
       updatedUsersList.push(newUserFromDatabase)
 
       this.setState({users: updatedUsersList})
-
     } catch (error) {
       console.log("Error creating new User")
+      console.log(error)
     }
   }
 
@@ -95,6 +103,7 @@ class App extends Component {
 
     const LoginFormComponent = () => (
       <LoginForm
+        findUserAndLogin={this.findUserAndLogin}
         logUserIn={this.logUserIn}
         isLoggedIn={this.state.isLoggedIn}
         currentUser={this.state.currentUser} />
@@ -103,13 +112,15 @@ class App extends Component {
     const NewUserFormComponent = () => (
       <NewUserForm
         createUser={this.createUser}
-        logUserIn={this.logUserIn}
+        findUserAndLogin={this.findUserAndLogin}
         isLoggedIn={this.state.isLoggedIn}
         currentUser={this.state.currentUser} />
     )
 
     const ProfileViewComponent = () => (
       <ProfileView
+        logUserOut={this.logUserOut}
+        deleteUser={this.deleteUser}
         isLoggedIn={this.state.isLoggedIn}
         currentUser={this.state.currentUser} />
     )

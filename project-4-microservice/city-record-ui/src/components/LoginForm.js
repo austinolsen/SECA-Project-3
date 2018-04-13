@@ -6,16 +6,26 @@ import {Redirect} from "react-router-dom";
 class LoginForm extends Component {
 
   state = {
-    currentUser: {},
-    redirectToProfilePage: false
+    userInfo: {}
   }
 
-  checkForUser = (userName, passWord) => {
+  handleChange = (event) => {
+    const attributeToChange = event.target.name
+    const newValue = event.target.value
 
+    const updatedUserInfo = {...this.state.userInfo}
+    updatedUserInfo[attributeToChange] = newValue
+    this.setState({userInfo: updatedUserInfo})
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault()
+    this.props.findUserAndLogin(this.state.userInfo.userName)
+    this.setState({userInfo: {}})
   }
 
   render() {
-    if(this.state.redirectToProfilePage) {
+    if(this.props.isLoggedIn) {
       return <Redirect to="/profile" />
     }
 
@@ -26,34 +36,31 @@ class LoginForm extends Component {
           <h4><Link to="/new" id="new-user-link">Sign Up</Link></h4>
         </button>
         <button>
-          <h4><Link to="/admin" id="admin-link">User admin</Link></h4>
-        </button>
-        <button>
           <h4><Link to="/" id="home-link">Home</Link></h4>
         </button>
         <hr/>
-        <form onSubmit={this.handleSubmit} id="new-user-form">
+        <form onSubmit={this.handleSubmit} id="login-form">
           <div>
             <label htmlFor="userName">Username </label>
             <input
-              id="new-user-user-name"
+              id="userName-input"
               type="text"
               name="userName"
               onChange={this.handleChange} />
             </div>
-            <div>
+            {/* <div>
               <label htmlFor="password">Password </label>
               <input
                 id="new-user-password"
                 type="text"
                 name="password"
                 onChange={this.handleChange} />
-              </div>
+              </div> */}
               <div>
                 <input
-                  id="new-user-submit"
+                  id="login-submit"
                   type="submit"
-                  value="Create" />
+                  value="Login" />
                 </div>
               </form>
             </div>

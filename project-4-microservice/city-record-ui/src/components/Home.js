@@ -11,9 +11,6 @@ const Home = (props) => {
       <button>
         <h4><Link to="/login" id="login-link">Login</Link></h4>
       </button>
-      <button>
-        <h4><Link to="/admin" id="admin-link">User admin</Link></h4>
-      </button>
       <hr/>
     </div>
   )

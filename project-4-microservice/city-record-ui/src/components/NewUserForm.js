@@ -6,16 +6,13 @@ import {Link} from "react-router-dom";
 class NewUserForm extends Component {
 
   state = {
-    user: {},
-    redirectToProfilePage: false,
-    currentUser: {}
+    user: {}
   }
 
   handleSubmit = (event) => {
     event.preventDefault()
     this.props.createUser(this.state.user)
-    this.props.setCurrentUser(this.state.user)
-    this.setState({redirectToProfilePage: true})
+    this.setState({user: {}})
   }
 
   handleChange = (event) => {
@@ -29,7 +26,7 @@ class NewUserForm extends Component {
 
   render() {
 
-    if(this.state.redirectToProfilePage) {
+    if(this.props.isLoggedIn) {
       return <Redirect to="/profile" />
     }
 
@@ -38,9 +35,6 @@ class NewUserForm extends Component {
         <h2>Create New User</h2>
         <button>
           <h4><Link to="/login" id="login-link">Login</Link></h4>
-        </button>
-        <button>
-          <h4><Link to="/admin" id="admin-link">User admin</Link></h4>
         </button>
         <button>
           <h4><Link to="/" id="home-link">Home</Link></h4>
@@ -56,7 +50,7 @@ class NewUserForm extends Component {
               onChange={this.handleChange} />
           </div>
           <div>
-            <label htmlFor="password">Password </label>
+            <label htmlFor="password">First Name </label>
             <input
               id="new-user-password"
               type="text"
